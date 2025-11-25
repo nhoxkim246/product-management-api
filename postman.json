@@ -1,0 +1,123 @@
+{
+  "info": {
+    "name": "ProductManagementAPI",
+    "_postman_id": "a6fbf5e0-1111-4f0a-aaaa-222233334444",
+    "description": "Product Management API (Products & Inventory)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:5001"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get products (paged)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/products?page=1&pageSize=20",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products" ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "pageSize",
+              "value": "20"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get product by id",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/products/1",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products", "1" ]
+        }
+      }
+    },
+    {
+      "name": "Create product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Basic T-Shirt\",\n  \"slug\": \"basic-tshirt\",\n  \"description\": \"Basic cotton T-shirt\",\n  \"categoryId\": 1,\n  \"brandId\": 1,\n  \"basePrice\": 9.99,\n  \"isPublished\": true,\n  \"imageUrls\": [\n    \"https://example.com/images/tshirt-front.jpg\",\n    \"https://example.com/images/tshirt-back.jpg\"\n  ],\n  \"variants\": [\n    {\n      \"sku\": \"TSHIRT-BLACK-M\",\n      \"color\": \"Black\",\n      \"size\": \"M\",\n      \"additionalPrice\": 0,\n      \"initialQuantity\": 100\n    },\n    {\n      \"sku\": \"TSHIRT-WHITE-L\",\n      \"color\": \"White\",\n      \"size\": \"L\",\n      \"additionalPrice\": 1.5,\n      \"initialQuantity\": 50\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/products",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products" ]
+        }
+      }
+    },
+    {
+      "name": "Update product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Basic T-Shirt updated\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"brandId\": 1,\n  \"basePrice\": 10.99,\n  \"isPublished\": true,\n  \"imageUrls\": [\n    \"https://example.com/images/tshirt-front-new.jpg\"\n  ],\n  \"rowVersion\": \"{{productRowVersionBase64}}\",\n  \"variants\": [\n    {\n      \"id\": 1,\n      \"sku\": \"TSHIRT-BLACK-M\",\n      \"color\": \"Black\",\n      \"size\": \"M\",\n      \"additionalPrice\": 0,\n      \"isActive\": true,\n      \"quantity\": 80,\n      \"rowVersion\": \"{{variant1RowVersionBase64}}\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/products/1",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products", "1" ]
+        }
+      }
+    },
+    {
+      "name": "Delete product",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/products/1",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products", "1" ]
+        }
+      }
+    },
+    {
+      "name": "Adjust inventory",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"delta\": -2,\n  \"rowVersion\": \"{{inventoryRowVersionBase64}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/products/variants/1/adjust-inventory",
+          "host": [ "{{baseUrl}}" ],
+          "path": [ "api", "products", "variants", "1", "adjust-inventory" ]
+        }
+      }
+    }
+  ]
+}
